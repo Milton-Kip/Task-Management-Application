@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow - Productivity Application</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Authentication Section -->
+    <div id="auth-section" class="auth-section">
+      <div class="auth-container">
+        <div class="logo">
+          <i class="fas fa-tasks"></i>
+          <h1>TaskFlow</h1>
+        </div>
+        <div class="auth-tabs">
+          <button id="login-tab" class="active">Login</button>
+          <button id="signup-tab">Sign Up</button>
+        </div>
+        <div id="login-form" class="auth-form">
+          <input type="email" id="login-email" placeholder="Email" required>
+          <input type="password" id="login-password" placeholder="Password" required>
+          <button id="login-button" class="auth-button">Login</button>
+        </div>
+        <div id="signup-form" class="auth-form hidden">
+          <input type="text" id="signup-name" placeholder="Full Name" required>
+          <input type="email" id="signup-email" placeholder="Email" required>
+          <input type="password" id="signup-password" placeholder="Password" required>
+          <button id="signup-button" class="auth-button">Sign Up</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app-section" class="hidden">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="logo">
+          <i class="fas fa-tasks"></i>
+          <h1>TaskFlow</h1>
+        </div>
+        <div class="user-info" id="user-info">
+          <div class="user-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <span id="user-name">User Name</span>
+        </div>
+        <nav>
+          <ul>
+            <li class="active" data-view="dashboard">
+              <i class="fas fa-home"></i>
+              <span>Dashboard</span>
+            </li>
+            <li data-view="my-tasks">
+              <i class="fas fa-check-circle"></i>
+              <span>My Tasks</span>
+            </li>
+            <li data-view="projects">
+              <i class="fas fa-project-diagram"></i>
+              <span>Projects</span>
+            </li>
+            <li data-view="team">
+              <i class="fas fa-users"></i>
+              <span>Team</span>
+            </li>
+          </ul>
+        </nav>
+        <div class="sidebar-footer">
+          <button id="logout-button">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="top-bar">
+          <div class="search-container">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search...">
+          </div>
+          <div class="top-bar-actions">
+            <button id="notifications-button">
+              <i class="fas fa-bell"></i>
+            </button>
+            <button id="add-task-button">
+              <i class="fas fa-plus"></i>
+              <span>Add Task</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="content-view">
+          <h2>Dashboard</h2>
+          <div class="dashboard-stats">
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-tasks"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Total Tasks</h3>
+                <p id="total-tasks-count">0</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-check-circle"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Completed</h3>
+                <p id="completed-tasks-count">0</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="stat-info">
+                <h3>In Progress</h3>
+                <p id="in-progress-tasks-count">0</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-project-diagram"></i>
+              </div>
+              <div class="stat-info">
+                <h3>Projects</h3>
+                <p id="projects-count">0</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-sections">
+            <div class="dashboard-section">
+              <div class="section-header">
+                <h3>Recent Tasks</h3>
+                <a href="#" class="view-all" data-view="my-tasks">View All</a>
+              </div>
+              <div id="recent-tasks" class="task-list">
+                <!-- Tasks will be loaded here -->
+              </div>
+            </div>
+            <div class="dashboard-section">
+              <div class="section-header">
+                <h3>Upcoming Deadlines</h3>
+              </div>
+              <div id="upcoming-deadlines" class="task-list">
+                <!-- Tasks will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Tasks View -->
+        <div id="my-tasks-view" class="content-view hidden">
+          <div class="view-header">
+            <h2>My Tasks</h2>
+            <div class="view-actions">
+              <div class="filter-dropdown">
+                <button id="filter-button">
+                  <i class="fas fa-filter"></i>
+                  <span>Filter</span>
+                </button>
+                <div class="dropdown-content hidden" id="filter-dropdown">
+                  <a href="#" data-filter="all">All Tasks</a>
+                  <a href="#" data-filter="todo">To Do</a>
+                  <a href="#" data-filter="in-progress">In Progress</a>
+                  <a href="#" data-filter="completed">Completed</a>
+                </div>
+              </div>
+              <button id="add-task-button-2">
+                <i class="fas fa-plus"></i>
+                <span>Add Task</span>
+              </button>
+            </div>
+          </div>
+          <div class="tasks-container">
+            <div class="task-column">
+              <div class="column-header">
+                <h3>To Do</h3>
+                <span id="todo-count" class="task-count">0</span>
+              </div>
+              <div id="todo-tasks" class="task-list">
+                <!-- Tasks will be loaded here -->
+              </div>
+            </div>
+            <div class="task-column">
+              <div class="column-header">
+                <h3>In Progress</h3>
+                <span id="in-progress-count" class="task-count">0</span>
+              </div>
+              <div id="in-progress-tasks" class="task-list">
+                <!-- Tasks will be loaded here -->
+              </div>
+            </div>
+            <div class="task-column">
+              <div class="column-header">
+                <h3>Completed</h3>
+                <span id="completed-count" class="task-count">0</span>
+              </div>
+              <div id="completed-tasks" class="task-list">
+                <!-- Tasks will be loaded here -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Projects View -->
+        <div id="projects-view" class="content-view hidden">
+          <div class="view-header">
+            <h2>Projects</h2>
+            <button id="add-project-button">
+              <i class="fas fa-plus"></i>
+              <span>Add Project</span>
+            </button>
+          </div>
+          <div id="projects-list" class="projects-grid">
+            <!-- Projects will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Team View -->
+        <div id="team-view" class="content-view hidden">
+          <div class="view-header">
+            <h2>Team Members</h2>
+            <button id="invite-member-button">
+              <i class="fas fa-user-plus"></i>
+              <span>Invite Member</span>
+            </button>
+          </div>
+          <div id="team-members" class="team-grid">
+            <!-- Team members will be loaded here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="task-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="task-modal-title">Add New Task</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="task-form">
+            <div class="form-group">
+              <label for="task-title">Task Title</label>
+              <input type="text" id="task-title" required>
+            </div>
+            <div class="form-group">
+              <label for="task-description">Description</label>
+              <textarea id="task-description"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="task-project">Project</label>
+                <select id="task-project">
+                  <option value="">None</option>
+                  <!-- Projects will be loaded here -->
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="task-status">Status</label>
+                <select id="task-status">
+                  <option value="todo">To Do</option>
+                  <option value="in-progress">In Progress</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="task-due-date">Due Date</label>
+                <input type="date" id="task-due-date">
+              </div>
+              <div class="form-group">
+                <label for="task-priority">Priority</label>
+                <select id="task-priority">
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="task-assignee">Assign To</label>
+              <select id="task-assignee">
+                <option value="">Myself</option>
+                <!-- Team members will be loaded here -->
+              </select>
+            </div>
+            <input type="hidden" id="task-id">
+            <div class="form-actions">
+              <button type="button" class="cancel-button">Cancel</button>
+              <button type="submit" class="save-button">Save Task</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="project-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="project-modal-title">Add New Project</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="project-form">
+            <div class="form-group">
+              <label for="project-name">Project Name</label>
+              <input type="text" id="project-name" required>
+            </div>
+            <div class="form-group">
+              <label for="project-description">Description</label>
+              <textarea id="project-description"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="project-color">Color</label>
+              <input type="color" id="project-color" value="#4f46e5">
+            </div>
+            <input type="hidden" id="project-id">
+            <div class="form-actions">
+              <button type="button" class="cancel-button">Cancel</button>
+              <button type="submit" class="save-button">Save Project</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="invite-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Invite Team Member</h2>
+          <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="invite-form">
+            <div class="form-group">
+              <label for="invite-email">Email Address</label>
+              <input type="email" id="invite-email" required>
+            </div>
+            <div class="form-group">
+              <label for="invite-role">Role</label>
+              <select id="invite-role">
+                <option value="member">Team Member</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="cancel-button">Cancel</button>
+              <button type="submit" class="save-button">Send Invitation</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  
+  <!-- Application Scripts -->
+  <script src="firebase-config.js"></script>
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+  <script src="tasks.js"></script>
+  <script src="projects.js"></script>
+  <script src="team.js"></script>
+</body>
+</html>
